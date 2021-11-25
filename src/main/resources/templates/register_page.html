@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="ru" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="/static/css/bootstrap.min.css" rel="stylesheet" type="text/css" th:href="@{/css/bootstrap.min.css}">
+    <link href="/static/css/font-glyphicons.css" rel="stylesheet" type="text/css" th:href="@{/css/font-glyphicons.css}">
+    <!-- Подключение jQuery и плагина Masked Input -->
+    <script src="/static/js/jquery.min.js" type="text/javascript" th:src="@{/js/jquery.min.js}"></script>
+    <script src="/static/js/jquery.maskedinput.min.js" type="text/javascript"
+            th:src="@{/js/jquery.maskedinput.min.js}"></script>
+    <script src="/static/js/bootstrap.min.js" type="text/javascript" th:src="@{/js/bootstrap.min.js}"></script>
+
+    <title>Json Data</title>
+
+</head>
+<body>
+<div class="container">
+    <div class="row">
+        <div class="col-md-6 col-md-offset-3">
+            <h4 style="border-bottom: 1px solid #c5c5c5;">
+                <i class="glyphicon glyphicon-user"> </i>
+                Sign Up
+            </h4>
+            <div style="padding: 20px;">
+                <form method="post" name="/register" th:object="${registerRequest}">
+                    <fieldset>
+                        <div class="form-group input-group">
+							<span class="input-group-addon">
+                                <i class="glyphicon glyphicon-user"></i>
+							</span>
+                            <input name="fullName" class="form-control" placeholder="Полное имя (от 5 до 50 символов)"
+                                   id="fullName" type="text" required="" autofocus="">
+                        </div>
+                        <div class="form-group input-group">
+							<span class="input-group-addon">
+                                <i class="glyphicon glyphicon-envelope"></i>
+							</span>
+                            <input name="email" class="form-control" placeholder="Email" id="email" type="email"
+                                   required="" autofocus="">
+                        </div>
+                        <div class="form-group input-group">
+							<span class="input-group-addon">
+                                <i class="glyphicon glyphicon-earphone"></i>
+                            </span>
+
+                            <div class="form-group">
+                                <div class="d-flex">
+                                    <select id="country" class="form-control">
+                                        <option value="ua">UA +380</option>
+                                        <option value="ru">RU +7</option>
+                                        <option value="by">BLR +375</option>
+                                    </select>
+                                    <input name="phone" class="form-control" id="phone" type="text" required="">
+                                </div>
+                            </div>
+                            <script>
+                                jQuery(function ($) {
+                                    $(function () {
+                                        function maskPhone() {
+                                            var country = $('#country option:selected').val();
+                                            switch (country) {
+                                                case "ru":
+                                                    $("#phone").mask("+7(999)-999-99-99");
+                                                    break;
+                                                case "ua":
+                                                    $("#phone").mask("+380(999)-99-99-99");
+                                                    break;
+                                                case "by":
+                                                    $("#phone").mask("+375(999)-999-99-99");
+                                                    break;
+                                            }
+                                        }
+
+                                        maskPhone();
+                                        $('#country').change(function () {
+                                            maskPhone();
+                                        });
+                                    });
+                                });
+                            </script>
+                        </div>
+                        <div class="form-group input-group">
+							<span class="input-group-addon">
+								<i class="glyphicon glyphicon-briefcase"></i>
+							</span>
+                            <div class="form-group">
+                                <select name="status" id="socialStatus" class="form-control" required="">
+                                    <option value> Social status</option>
+                                    <option value="school">Учусь в школе</option>
+                                    <option value="study">Студент</option>
+                                    <option value="work">Работаю</option>
+                                    <option value="noWorkNoStudy">Не учусь/работаю</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-group input-group">
+							<span class="input-group-addon">
+								<i class="glyphicon glyphicon-lock"> </i>
+							</span>
+                            <input name="password" class="form-control" placeholder="Password" id="password"
+                                   type="password" value=""
+                                   required="">
+                        </div>
+                        <div class="form-group input-group">
+							<span class="input-group-addon">
+								<i class="glyphicon glyphicon-lock"> </i>
+							</span>
+                            <input class="form-control" placeholder="Repeat password" id="repeatPassword"
+                                   type="password" value=""
+                                   required="">
+                        </div>
+                        <div class="form-group">
+                            <button id="btnSubmit" type="submit" class="btn btn-primary btn-block">
+                                Create Account
+                            </button>
+                        </div>
+                    </fieldset>
+                </form>
+                <a href="/login">Authorization</a>
+                <a href="/">Home</a>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="/static/js/jquery.min1_8_2.js" type="text/javascript" th:src="@{/js/jquery.min1_8_2.js}"></script>
+<script type="text/javascript">
+    $(function () {
+        $("#btnSubmit").click(function () {
+            var password = $("#password").val();
+            var confirmPassword = $("#repeatPassword").val();
+            if (password !== confirmPassword) {
+                alert("Пароли не совпадают.");
+                return false;
+            }
+            return true;
+        });
+    });
+</script>
+</body>
+</html>
